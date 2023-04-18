@@ -8,6 +8,7 @@ function PokemonPage() {
   const pokemonUrl = "http://localhost:3001/pokemon/"
   const [pokemons, setPokemons] = useState([])
   const [search, setSearch] = useState('')
+  //passing down directly at the moment; how else should I do?
 
   useEffect(() => {
     fetch(pokemonUrl)
@@ -21,9 +22,9 @@ function PokemonPage() {
     <Container>
       <h1>Pokemon Searcher</h1>
       <br />
-      <PokemonForm />
+      <PokemonForm setPokemons={setPokemons}/>
       <br />
-      <Search />
+      <Search search={search} setSearch={setSearch} />
       <br />
       <PokemonCollection pokemons={displayedPokemons} />
     </Container>

@@ -6,10 +6,6 @@ function PokemonCard({ pokemon }) {
   const { front, back } = sprites
   const [clicked, setClicked] = useState(false)
 
-  function handleClick() {
-
-  }
-
   return (
     <Card>
       <div onClick={() => setClicked(clicked => !clicked)} >
