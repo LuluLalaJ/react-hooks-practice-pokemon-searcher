@@ -16,13 +16,29 @@ function PokemonPage() {
     .then(data => setPokemons(data))
   }, [])
 
+
+  function addNewPokemon(newPokemon) {
+    const postRequest = {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newPokemon)
+    }
+
+    fetch(pokemonUrl, postRequest)
+    .then(r => r.json())
+    .then(data => setPokemons([...pokemons, newPokemon]))
+  }
+  
   const displayedPokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <Container>
       <h1>Pokemon Searcher</h1>
       <br />
-      <PokemonForm setPokemons={setPokemons}/>
+      <PokemonForm addNewPokemon={addNewPokemon}/>
       <br />
       <Search search={search} setSearch={setSearch} />
       <br />
