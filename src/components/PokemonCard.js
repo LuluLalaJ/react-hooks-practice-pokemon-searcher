@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { Card } from "semantic-ui-react";
 
-function PokemonCard({ pokemon }) {
-  const { name, hp, sprites } = pokemon
+function PokemonCard({ pokemon, flipPokemon }) {
+  const { name, hp, sprites, flipped} = pokemon
   const { front, back } = sprites
-  const [clicked, setClicked] = useState(false)
 
   return (
     <Card>
-      <div onClick={() => setClicked(clicked => !clicked)} >
+      <div onClick={()=>flipPokemon(pokemon.id)} >
         <div className="image">
-          {clicked ? <img src={back} alt={name}/> : <img src={front} alt={name} />}
+          {flipped ? <img src={back} alt={name}/> : <img src={front} alt={name} />}
         </div>
         <div className="content">
           <div className="header">{name}</div>

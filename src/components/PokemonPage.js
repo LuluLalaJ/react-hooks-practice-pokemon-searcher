@@ -13,9 +13,11 @@ function PokemonPage() {
   useEffect(() => {
     fetch(pokemonUrl)
     .then(r => r.json())
-    .then(data => setPokemons(data))
+    .then(data => {
+      const updatedData = data.map( pokemon => {return {...pokemon, flipped: false}})
+      setPokemons(updatedData)
+    })
   }, [])
-
 
   function addNewPokemon(newPokemon) {
     const postRequest = {
@@ -31,7 +33,18 @@ function PokemonPage() {
     .then(r => r.json())
     .then(data => setPokemons([...pokemons, newPokemon]))
   }
-  
+
+  function flipPokemon(flippedId) {
+    const afterFlip = pokemons.map(pokemon => {
+      if (pokemon.id === flippedId) {
+        let isFlipped = pokemon.flipped
+        return {...pokemon, flipped: !isFlipped}
+      } return pokemon
+    })
+
+    setPokemons(afterFlip)
+  }
+
   const displayedPokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
@@ -42,7 +55,7 @@ function PokemonPage() {
       <br />
       <Search search={search} setSearch={setSearch} />
       <br />
-      <PokemonCollection pokemons={displayedPokemons} />
+      <PokemonCollection pokemons={displayedPokemons} flipPokemon={flipPokemon}/>
     </Container>
   );
 }
